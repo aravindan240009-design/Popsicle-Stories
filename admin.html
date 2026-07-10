@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%8C%B6%EF%B8%8F</text></svg>">
+  <meta name="description" content="Popsicle Stories Admin Dashboard — Manage menu, orders, coupons, and reviews.">
+  <title>Admin Dashboard — Popsicle Stories</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Pacifico&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <button class="admin-menu-toggle" id="admin-menu-toggle" aria-label="Toggle menu">☰</button>
+  <div class="admin-sidebar-overlay" id="admin-sidebar-overlay"></div>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="logo">🍦 Popsicle Stories</div>
+      <nav class="admin-nav">
+        <a href="#" data-section="dashboard" class="active">📊 Dashboard</a>
+        <a href="#" data-section="menu">🍽️ Menu Management</a>
+        <a href="#" data-section="orders">📦 Orders</a>
+        <a href="#" data-section="coupons">🏷️ Coupons</a>
+        <a href="#" data-section="reviews">⭐ Reviews</a>
+        <button class="admin-logout">🚪 Logout</button>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Dashboard -->
+      <section class="admin-section active" id="section-dashboard">
+        <div class="admin-header">
+          <h1>Dashboard</h1>
+          <span id="admin-greeting" style="color:var(--color-text-muted)"></span>
+        </div>
+        <div class="stat-cards">
+          <div class="stat-card">
+            <div class="label">Today's Orders</div>
+            <div class="value" id="stat-orders">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Today's Revenue</div>
+            <div class="value" id="stat-revenue">₹0</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Avg Rating</div>
+            <div class="value" id="stat-rating">0★</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Active Coupons</div>
+            <div class="value" id="stat-coupons">0</div>
+          </div>
+        </div>
+        <div class="chart-container">
+          <h3 style="margin-bottom:20px;font-size:18px">Weekly Orders</h3>
+          <div class="chart-bars" id="chart-bars"></div>
+        </div>
+      </section>
+
+      <!-- Menu Management -->
+      <section class="admin-section" id="section-menu">
+        <div class="admin-header">
+          <h1>Menu Management</h1>
+          <button class="btn btn-primary btn-sm" id="add-item-btn">+ Add New Item</button>
+        </div>
+        <div class="admin-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price (₹)</th>
+                <th>Rating</th>
+                <th>Available</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="menu-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Orders -->
+      <section class="admin-section" id="section-orders">
+        <div class="admin-header">
+          <h1>Orders</h1>
+        </div>
+        <div class="admin-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Items</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="orders-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Coupons -->
+      <section class="admin-section" id="section-coupons">
+        <div class="admin-header">
+          <h1>Active Coupons</h1>
+        </div>
+        <div id="coupons-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px"></div>
+      </section>
+
+      <!-- Reviews -->
+      <section class="admin-section" id="section-reviews">
+        <div class="admin-header">
+          <h1>Customer Reviews</h1>
+        </div>
+        <div id="reviews-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Add Item Modal -->
+  <div class="modal-overlay" id="add-item-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Add New Menu Item</h2>
+        <button class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="add-item-form">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select name="category" class="form-control" required>
+              <option value="">Select category</option>
+              <option>Signature Popsicles</option>
+              <option>Kunafa Specials</option>
+              <option>Fruit Popsicles</option>
+              <option>Chocolate &amp; Nutty</option>
+              <option>Kulfi Classics</option>
+              <option>Shakes &amp; Sips</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" class="form-control" rows="3" required></textarea>
+          </div>
+          <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="form-group">
+              <label>Price (₹)</label>
+              <input type="number" name="price" class="form-control" required min="1">
+            </div>
+            <div class="form-group">
+              <label>Type</label>
+              <select name="isVeg" class="form-control">
+                <option value="true">Vegetarian</option>
+                <option value="false">Non-Vegetarian</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Image URL</label>
+            <input type="url" name="image" class="form-control" required placeholder="https://images.unsplash.com/...">
+          </div>
+          <div class="form-group">
+            <label>Tags (comma-separated)</label>
+            <input type="text" name="tags" class="form-control" placeholder="popular, spicy, bestseller">
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Add Item</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/admin.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await App.init();
+      if (!Auth.requireAdmin()) return;
+
+      const user = Auth.getUser();
+      if (user) {
+        document.getElementById('admin-greeting').textContent = `Welcome, ${user.name}`;
+      }
+
+      await Admin.init();
+
+      // Mobile sidebar toggle
+      const sidebar = document.querySelector('.admin-sidebar');
+      const sidebarToggle = document.getElementById('admin-menu-toggle');
+      const sidebarOverlay = document.getElementById('admin-sidebar-overlay');
+      function toggleSidebar(open) {
+        const show = open ?? !sidebar.classList.contains('open');
+        sidebar.classList.toggle('open', show);
+        sidebarOverlay.classList.toggle('open', show);
+      }
+      sidebarToggle.addEventListener('click', () => toggleSidebar());
+      sidebarOverlay.addEventListener('click', () => toggleSidebar(false));
+      document.querySelectorAll('.admin-nav a[data-section]').forEach(link => {
+        link.addEventListener('click', () => toggleSidebar(false));
+      });
+    });
+  </script>
+</body>
+</html>
