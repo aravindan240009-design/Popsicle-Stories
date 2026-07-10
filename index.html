@@ -2,16 +2,76 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%8C%B6%EF%B8%8F</text></svg>">
-  <meta name="description" content="Popsicle Stories — Handcrafted kunafa popsicles, kulfi & frozen treats in Thiruvallur. Sweet stories, frozen.">
-  <title>Popsicle Stories — Sweet Stories, Frozen</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Popsicle Stories — Handcrafted kunafa popsicles, kulfi & frozen treats in Thiruvallur. Order online for fresh, delicious desserts delivered to your door.">
+  <meta name="keywords" content="popsicles, kulfi, kunafa, ice cream, frozen desserts, Thiruvallur, online ordering, food delivery">
+  <meta name="author" content="Popsicle Stories">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.popsiclestories.in/">
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Popsicle Stories — Sweet Stories, Frozen">
+  <meta property="og:description" content="Handcrafted kunafa popsicles, kulfi & frozen treats in Thiruvallur. Order online now!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.popsiclestories.in/">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1488900128323-21503983a07e?w=1200&q=80">
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Popsicle Stories — Sweet Stories, Frozen">
+  <meta name="twitter:description" content="Handcrafted popsicles & frozen treats. Order online now!">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1488900128323-21503983a07e?w=1200&q=80">
+  
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#C4213C">
+  
+  <title>Popsicle Stories — Sweet Stories, Frozen | Handcrafted Popsicles & Kulfi</title>
+  
+  <!-- Preconnect for Performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://images.unsplash.com">
+  
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Pacifico&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Popsicle Stories">
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Popsicle Stories",
+    "description": "Handcrafted kunafa popsicles, kulfi & frozen treats",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "No. 1, Sivavishnu Koil Street, Rajajipuram",
+      "addressLocality": "Thiruvallur",
+      "postalCode": "602 001",
+      "addressCountry": "IN"
+    },
+    "telephone": "+91-98409-12345",
+    "priceRange": "₹₹",
+    "servesCuisine": "Desserts, Frozen Treats",
+    "openingHours": "Mo-Fr 12:00-23:00, Sa-Su 12:00-23:30"
+  }
+  </script>
 </head>
 <body>
+  <!-- Skip to main content for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <!-- Navbar -->
   <nav class="navbar transparent" role="navigation" aria-label="Main navigation">
     <div class="container">
@@ -54,17 +114,17 @@
   </div>
 
   <!-- Hero -->
-  <section class="hero">
+  <section class="hero" role="banner">
     <div class="hero-bg">
-      <img src="https://images.unsplash.com/photo-1488900128323-21503983a07e?w=1920&q=80" alt="Colorful handcrafted popsicles">
+      <img src="https://images.unsplash.com/photo-1488900128323-21503983a07e?w=1920&q=80" alt="Colorful handcrafted popsicles" loading="eager" fetchpriority="high">
     </div>
-    <div class="hero-overlay"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
     <div class="hero-content">
-      <h1>Sweet Stories, Frozen</h1>
+      <h1 id="main-content">Sweet Stories, Frozen</h1>
       <p>Handcrafted kunafa popsicles, kulfi & frozen treats — made fresh daily and delivered chilled to your door.</p>
       <div class="hero-ctas">
-        <a href="menu.html" class="btn btn-primary btn-lg">Order Now</a>
-        <a href="login.html" class="btn btn-ghost btn-lg">Login</a>
+        <a href="menu.html" class="btn btn-primary btn-lg" aria-label="Browse our menu and order now">Order Now</a>
+        <a href="login.html" class="btn btn-ghost btn-lg" aria-label="Login to your account">Login</a>
       </div>
     </div>
   </section>
@@ -221,6 +281,15 @@
 
       App.initScrollReveal();
     });
+
+    // Register Service Worker for PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('[SW] Registered:', reg))
+          .catch(err => console.log('[SW] Registration failed:', err));
+      });
+    }
   </script>
 </body>
 </html>
