@@ -16,7 +16,6 @@
   <nav class="navbar solid scrolled" role="navigation" aria-label="Main navigation">
     <div class="container">
       <a href="index.html" class="navbar-logo">
-        <span class="logo-icon">🍦</span>
         <span>Popsicle Stories</span>
       </a>
       <div class="nav-links">
@@ -146,6 +145,10 @@
           <p>No. 1, Sivavishnu Koil Street,<br>Rajajipuram, Thiruvallur – 602 001</p>
           <p>📞 +91 98409 12345</p>
           <p>✉️ hello@popsiclestories.in</p>
+          <form class="newsletter-form" id="newsletter-form">
+            <input type="email" placeholder="Your email" required aria-label="Newsletter email">
+            <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+          </form>
         </div>
       </div>
       <div class="footer-bottom">
@@ -321,6 +324,13 @@
       });
 
       renderMenu();
+
+      // Newsletter
+      document.getElementById('newsletter-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        App.showToast('Thank you for subscribing!', 'success');
+        e.target.reset();
+      });
     });
   </script>
 </body>
